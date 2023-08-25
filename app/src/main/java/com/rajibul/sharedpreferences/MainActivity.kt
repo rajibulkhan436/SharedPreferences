@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         sharedPreferences= getSharedPreferences(resources.getString(R.string.app_name), Context.MODE_PRIVATE)
         editor= sharedPreferences.edit()
         binding.activity = this
+
     }
     fun onButtonFab() {
         var dialog = Dialog(this)
@@ -32,13 +33,26 @@ class MainActivity : AppCompatActivity() {
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
         dialog.show()
+        Singleton.sharedPref.getString(AppConstants.color1)
+        dialogBinding.btnColor1.setText(sharedPreferences.getString("Color1","Color 1"))
+        dialogBinding.btnColor1.setOnClickListener{
+            ColorPickerDialog
+                .Builder(this)        				// Pass Activity Instance
+                .setTitle("Pick Theme")           	// Default "Choose Color"
+                .setColorShape(ColorShape.SQAURE)   // Default ColorShape.CIRCLE
+                .setDefaultColor(R.color.white)     // Pass Default Color
+                .setColorListener { color, colorHex ->
+                    // Handle Color Selection
+                    editor.putString("color1", dialogBinding.btnColor1.text.toString())
+                }
+                .show()
 
-        dialogBinding.btnSave.setOnClickListener {
-            dialog.dismiss()
+
+            editor.apply()
+            editor.commit()
+            Singleton.sharedPref.saveString(AppConstants.color1,dialogBinding.btnColor1.text.toString() )
         }
-    }
-
-        fun onButtonColor1(){
+        dialogBinding.btnColor2.setOnClickListener{
             ColorPickerDialog
                 .Builder(this)        				// Pass Activity Instance
                 .setTitle("Pick Theme")           	// Default "Choose Color"
@@ -48,19 +62,11 @@ class MainActivity : AppCompatActivity() {
                     // Handle Color Selection
                 }
                 .show()
-
         }
-    fun onButtonColor2(){
-        ColorPickerDialog
-            .Builder(this)        				// Pass Activity Instance
-            .setTitle("Pick Theme")           	// Default "Choose Color"
-            .setColorShape(ColorShape.SQAURE)   // Default ColorShape.CIRCLE
-            .setDefaultColor(R.color.white)     // Pass Default Color
-            .setColorListener { color, colorHex ->
-                // Handle Color Selection
-            }
-            .show()
-
+        
+        dialogBinding.btnSave.setOnClickListener {
+            dialog.dismiss()
+        }
     }
 
     }
