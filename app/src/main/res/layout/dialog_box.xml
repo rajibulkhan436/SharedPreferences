@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    >
+    <data>
+        <variable
+            name="activity"
+            type="com.rajibul.sharedpreferences.MainActivity"/>
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Color 1"
+        android:id="@+id/btnColor1"
+        android:layout_gravity="center"
+        android:onClick="@{()-> activity.onButtonColor1()}"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Color 2"
+        android:id="@+id/btnColor2"
+        android:layout_gravity="center"
+        android:onClick="@{()-> activity.onButtonColor2()}"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="enter the size of list You want"
+        android:layout_gravity="center"
+        android:id="@+id/etSize"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:id="@+id/btnSave"
+        android:layout_gravity="center"
+        />
+    </LinearLayout>
+
+
+</layout>
