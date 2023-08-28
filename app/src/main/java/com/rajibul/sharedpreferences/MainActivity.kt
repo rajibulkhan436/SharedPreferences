@@ -33,9 +33,11 @@ class MainActivity : AppCompatActivity() {
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
         dialog.show()
+        Singleton.sharedPref.getString(AppConstants.color2)
         Singleton.sharedPref.getString(AppConstants.color1)
-        dialogBinding.btnColor1.setText(sharedPreferences.getString("Color1","Color 1"))
-        dialogBinding.btnColor1.setOnClickListener{
+        Singleton.sharedPref.getString(AppConstants.listSize)
+
+        dialogBinding.etColor1.setOnClickListener{
             ColorPickerDialog
                 .Builder(this)        				// Pass Activity Instance
                 .setTitle("Pick Theme")           	// Default "Choose Color"
@@ -43,16 +45,20 @@ class MainActivity : AppCompatActivity() {
                 .setDefaultColor(R.color.white)     // Pass Default Color
                 .setColorListener { color, colorHex ->
                     // Handle Color Selection
-                    editor.putString("color1", dialogBinding.btnColor1.text.toString())
+                    editor.putString("color1", colorHex)
+                    editor.apply()
+                    editor.commit()
+                    dialogBinding.etColor1.setText(sharedPreferences.getString("Color1",colorHex))
+                    Singleton.sharedPref.saveString(AppConstants.color1,colorHex )
+
                 }
                 .show()
+            Singleton.sharedPref.getString(AppConstants.color1)
 
 
-            editor.apply()
-            editor.commit()
-            Singleton.sharedPref.saveString(AppConstants.color1,dialogBinding.btnColor1.text.toString() )
+
         }
-        dialogBinding.btnColor2.setOnClickListener{
+        dialogBinding.etColor2.setOnClickListener{
             ColorPickerDialog
                 .Builder(this)        				// Pass Activity Instance
                 .setTitle("Pick Theme")           	// Default "Choose Color"
@@ -60,11 +66,23 @@ class MainActivity : AppCompatActivity() {
                 .setDefaultColor(R.color.white)     // Pass Default Color
                 .setColorListener { color, colorHex ->
                     // Handle Color Selection
+
+                    editor.putString("color1", colorHex)
+                    editor.apply()
+                    editor.commit()
+                    dialogBinding.etColor2.setText(sharedPreferences.getString("Color2",colorHex))
+                    Singleton.sharedPref.saveString(AppConstants.color2,colorHex )
                 }
                 .show()
         }
         
         dialogBinding.btnSave.setOnClickListener {
+            editor.putInt("listSize", dialogBinding.etSize.text.toString().toInt())
+            editor.apply()
+            editor.commit()
+            dialogBinding.etSize.setText(sharedPreferences.getString("Color2",dialogBinding.etSize.text.toString()))
+            Singleton.sharedPref.saveInt(AppConstants.listSize, dialogBinding.etSize.text.toString().toInt())
+
             dialog.dismiss()
         }
     }
