@@ -19,10 +19,12 @@ class SharedPrefClass {
     fun saveString(key: String, value:String){
         editor?.putString(key, value)
         editor?.commit()
+        editor?.apply()
     }
     fun saveInt(key: String, value: Int){
         editor?.putInt(key, value)
         editor?.commit()
+        editor?.apply()
     }
 
     fun getString(name: String) : String{

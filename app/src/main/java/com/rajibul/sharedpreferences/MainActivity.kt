@@ -12,16 +12,13 @@ import com.rajibul.sharedpreferences.databinding.ActivityMainBinding
 import com.rajibul.sharedpreferences.databinding.DialogBoxBinding
 
 class MainActivity : AppCompatActivity() {
-    lateinit var sharedPreferences: SharedPreferences
-    lateinit var editor: SharedPreferences.Editor
     lateinit var binding:ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        sharedPreferences= getSharedPreferences(resources.getString(R.string.app_name), Context.MODE_PRIVATE)
-        editor= sharedPreferences.edit()
         binding.activity = this
+        Singleton.sharedPref.initPrefs(this)
 
     }
     fun onButtonFab() {
@@ -33,9 +30,9 @@ class MainActivity : AppCompatActivity() {
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
         dialog.show()
-        Singleton.sharedPref.getString(AppConstants.color2)
-        Singleton.sharedPref.getString(AppConstants.color1)
-        Singleton.sharedPref.getString(AppConstants.listSize)
+        dialogBinding.etColor2.setText(Singleton.sharedPref.getString(AppConstants.color2))
+        dialogBinding.etColor1.setText(Singleton.sharedPref.getString(AppConstants.color1))
+        dialogBinding.etSize.setText(Singleton.sharedPref.getString(AppConstants.listSize))
 
         dialogBinding.etColor1.setOnClickListener{
             ColorPickerDialog
@@ -45,17 +42,11 @@ class MainActivity : AppCompatActivity() {
                 .setDefaultColor(R.color.white)     // Pass Default Color
                 .setColorListener { color, colorHex ->
                     // Handle Color Selection
-                    editor.putString("color1", colorHex)
-                    editor.apply()
-                    editor.commit()
-                    dialogBinding.etColor1.setText(sharedPreferences.getString("Color1",colorHex))
-                    Singleton.sharedPref.saveString(AppConstants.color1,colorHex )
 
+                    dialogBinding.etColor1.setText(colorHex)
+                    Singleton.sharedPref.saveString(AppConstants.color1,colorHex )
                 }
                 .show()
-            Singleton.sharedPref.getString(AppConstants.color1)
-
-
 
         }
         dialogBinding.etColor2.setOnClickListener{
@@ -66,23 +57,14 @@ class MainActivity : AppCompatActivity() {
                 .setDefaultColor(R.color.white)     // Pass Default Color
                 .setColorListener { color, colorHex ->
                     // Handle Color Selection
-
-                    editor.putString("color1", colorHex)
-                    editor.apply()
-                    editor.commit()
-                    dialogBinding.etColor2.setText(sharedPreferences.getString("Color2",colorHex))
+                    dialogBinding.etColor2.setText(colorHex)
                     Singleton.sharedPref.saveString(AppConstants.color2,colorHex )
                 }
                 .show()
         }
         
         dialogBinding.btnSave.setOnClickListener {
-            editor.putInt("listSize", dialogBinding.etSize.text.toString().toInt())
-            editor.apply()
-            editor.commit()
-            dialogBinding.etSize.setText(sharedPreferences.getString("Color2",dialogBinding.etSize.text.toString()))
-            Singleton.sharedPref.saveInt(AppConstants.listSize, dialogBinding.etSize.text.toString().toInt())
-
+            Singleton.sharedPref.saveString(AppConstants.listSize, dialogBinding.etSize.text.toString())
             dialog.dismiss()
         }
     }
