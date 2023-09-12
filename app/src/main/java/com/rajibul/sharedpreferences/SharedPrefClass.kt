@@ -28,7 +28,10 @@ class SharedPrefClass {
     }
 
     fun getString(name: String) : String{
-        return sharedPrefs?.getString(name, "")?:""
+        return sharedPrefs?.getString(name , "#fffff")?:"#fffff"
+    }
+    fun getInt(size: String):Int{
+        return sharedPrefs?.getInt(size, 0)?:0
     }
 
     fun clearPrefs(){

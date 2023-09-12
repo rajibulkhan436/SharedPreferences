@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-
     >
     <data>
         <variable
-            name="activity"
-            type="com.rajibul.sharedpreferences.MainActivity"/>
+            name="colorPicker"
+            type="com.rajibul.sharedpreferences.MainActivity" />
+        <variable
+            name= "listColor"
+            type="String"
+            />
+        <import
+            type="android.graphics.Color"
+            />
     </data>
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +23,14 @@
         android:hint="Color 1"
         android:id="@+id/etColor1"
         android:layout_gravity="center"
-
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Color 1"
+        android:id="@+id/btnColor1"
+        android:layout_gravity="center"
+        android:onClick="@{()-> colorPicker.onButtonColor1()}"
         />
     <EditText
         android:layout_width="match_parent"
@@ -25,8 +38,16 @@
         android:hint="Color 2"
         android:id="@+id/etColor2"
         android:layout_gravity="center"
-
         />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Color 2"
+            android:layout_gravity="center"
+            android:id="@+id/btnColor2"
+            android:onClick="@{()-> colorPicker.onButtonColor2()}"
+            />
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,6 +61,7 @@
         android:text="Save"
         android:id="@+id/btnSave"
         android:layout_gravity="center"
+        android:onClick="@{()-> colorPicker.onButtonSave()}"
         />
     </LinearLayout>
 
